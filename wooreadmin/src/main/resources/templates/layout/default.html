@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">WOORE PIE 관리자</title>
+
+    <!-- CSRF 토큰 -->
+    <meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''">
+    <meta name="_csrf_header" th:content="${_csrf != null} ? ${_csrf.headerName} : ''">
+
+    <!-- 스타일시트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- 추가 스타일 -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<!-- 헤더 -->
+<header class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-6">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <img th:src="@{/images/logo.png}" alt="WOORE PIE" class="h-8 mr-3">
+                <h1 class="text-xl font-bold text-gray-800">WOORE PIE</h1>
+            </div>
+
+            <nav class="hidden md:flex space-x-8">
+                <a th:href="@{/}" th:class="${currentPage == 'dashboard' ? 'text-[#0F62FE]' : 'text-gray-600'} + ' hover:text-[#0F62FE] px-2 py-1 text-sm font-medium'">매물 승인</a>
+                <a th:href="@{/subscription}" th:class="${currentPage == 'subscription' ? 'text-[#0F62FE]' : 'text-gray-600'} + ' hover:text-[#0F62FE] px-2 py-1 text-sm font-medium'">청약 승인</a>
+                <a th:href="@{/sale}" th:class="${currentPage == 'sale' ? 'text-[#0F62FE]' : 'text-gray-600'} + ' hover:text-[#0F62FE] px-2 py-1 text-sm font-medium'">매각 승인</a>
+                <a th:href="@{/disclosure}" th:class="${currentPage == 'disclosure' ? 'text-[#0F62FE]' : 'text-gray-600'} + ' hover:text-[#0F62FE] px-2 py-1 text-sm font-medium'">공시 승인</a>
+                <a th:href="@{/dividend}" th:class="${currentPage == 'dividend' ? 'text-[#0F62FE]' : 'text-gray-600'} + ' hover:text-[#0F62FE] px-2 py-1 text-sm font-medium'">배당금 승인</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- 메인 콘텐츠 -->
+<main class="container mx-auto p-6">
+    <div layout:fragment="content"></div>
+</main>
+
+<!-- 자바스크립트 -->
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
