@@ -10,6 +10,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
-    @Query("SELECT s FROM Subscription s JOIN FETCH s.estate e WHERE e.subState = :state")
-    Optional<List<Subscription>> findWithSubscriptionByState(@Param("state") SubState state);
+    List<Subscription> findByEstate_EstateId(Long estateId);
 }

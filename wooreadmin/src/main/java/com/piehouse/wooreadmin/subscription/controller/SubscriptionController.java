@@ -1,6 +1,7 @@
 package com.piehouse.wooreadmin.subscription.controller;
 
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.dashboard.service.DashboardService;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class SubscriptionController {
     @GetMapping("")
     public String SubscriptionView(Model model) {
         model.addAttribute("currentpage", "subscription");
+        Optional<List<Estate>> estateList = subscriptionService.getEstateList();
+        estateList.ifPresent(estates -> model.addAttribute("estates", estates));
         return "subscription";
     }
 
