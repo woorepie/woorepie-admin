@@ -12,6 +12,4 @@ public interface NoticeService {
     public Optional<List<Estate>> getAllEstates();
 
     public Boolean addNotice(String noticeTitle, String noticeContent, Long estateId, MultipartFile file);
-
-    public String uploadFile(MultipartFile file);
 }
