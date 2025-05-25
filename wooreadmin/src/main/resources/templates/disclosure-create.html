@@ -76,14 +76,14 @@
         <form th:action="@{/disclosure/create}" method="post" enctype="multipart/form-data">
             <!-- 제목 입력 -->
             <div class="form-group">
-                <label for="title" class="form-label">제목을 입력하세요.</label>
-                <input type="text" id="title" name="title" class="form-control" required>
+                <label for="notice_title" class="form-label">제목을 입력하세요.</label>
+                <input type="text" id="notice_title" name="notice_title" class="form-control" required>
             </div>
 
             <!-- 내용 입력 -->
             <div class="form-group">
-                <label for="content" class="form-label">내용을 입력하세요.</label>
-                <textarea id="content" name="content" class="form-control" required></textarea>
+                <label for="notice_content" class="form-label">내용을 입력하세요.</label>
+                <textarea id="notice_content" name="notice_content" class="form-control"></textarea>
             </div>
 
             <!-- 첨부파일 -->
@@ -98,17 +98,11 @@
 
             <!-- 매물 선택 -->
             <div class="form-group">
-                <label for="property" class="form-label">매물을 선택하세요.</label>
-                <select id="property" name="property" class="form-control" required>
+                <label for="estate_id" class="form-label">매물을 선택하세요.</label>
+                <select id="estate_id" name="estate_id" class="form-control" required>
                     <option value="">매물을 선택해 주세요</option>
-                    <option th:each="property : ${properties}" th:value="${property.id}" th:text="${property.name}">강남 오피스텔 A동</option>
+                    <option th:each="estate : ${estates}" th:value="${estate.estateId}" th:text="${estate.estateName}">강남 오피스텔 A동</option>
                 </select>
-            </div>
-
-            <!-- 공지사항 -->
-            <div class="form-group">
-                <label for="notice" class="form-label">공지사항을 입력하세요.</label>
-                <input type="text" id="notice" name="notice" class="form-control">
             </div>
 
             <!-- 약관 동의 -->
