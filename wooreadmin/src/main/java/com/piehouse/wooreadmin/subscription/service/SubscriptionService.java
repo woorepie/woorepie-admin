@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubscriptionService {
-    public Optional<List<Subscription>> getSubscriptionList();
+    public Optional<List<Estate>> getEstateList();
 
     public Boolean approveSubscription(Long id);
 
