@@ -1,12 +1,17 @@
 package com.piehouse.wooreadmin.global.kafka.dto;
 
-import lombok.*;
 
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
 @Getter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class DividendCompleteMessage {
 
     private Long estate_id;
-    private Float dividend_yield;
+
+    private Integer dividend;
+
 }

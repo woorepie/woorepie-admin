@@ -1,9 +1,7 @@
 package com.piehouse.wooreadmin.dividend.controller;
 
-import com.piehouse.wooreadmin.dividend.entity.Dividend;
-import com.piehouse.wooreadmin.dividend.repository.DividendRepository;
-import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;
-import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
+import com.piehouse.wooreadmin.dividend.service.DividendService;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,33 +15,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class    DividendController {
 
-    private final DividendRepository dividendRepository;
-    private final KafkaProducerService kafkaProducerService;
+    private final DividendService dividendService;
 
     @GetMapping
     public String DividendView(Model model) {
         model.addAttribute("currentpage", "dividend");
-        List<Dividend> dividendList = dividendRepository.findALlDividends();
-        model.addAttribute("dividends", dividendList);
+        List<Estate> estates = dividendService.getSuccessEstateList();
+        model.addAttribute("estates", estates);
         return "dividend";
     }
 
     @PostMapping("/approve")
-    public String approve(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
-        Dividend dividend = dividendRepository.findById(estateId).orElseThrow();
-        // 실제 승인 처리 로직 필요 (예: 상태 변경)
-        DividendCompleteMessage message = new DividendCompleteMessage();
-        message.setEstate_id(dividend.getEstate().getEstateId());
-        message.setDividend_yield(dividend.getDividendYield().floatValue());
-        kafkaProducerService.sendDividendCompleteEvent(message);
-        redirectAttributes.addFlashAttribute("successMessage", "배당금이 승인되었습니다.");
+    public String approve(@RequestParam("estateId") Long estateId, @RequestParam("dividend") Integer dividend,
+                          RedirectAttributes redirectAttributes) {
+        if(dividendService.approveDividend(estateId, dividend)){
+            redirectAttributes.addFlashAttribute("successMessage", "배당금이 승인되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "배당금이 승인 오류가 발생했습니다.");
+        }
         return "redirect:/dividend";
     }
 
-    @PostMapping("/reject")
-    public String reject(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
-        // 실제 거부 처리 로직 필요 (예: 상태 변경)
-        redirectAttributes.addFlashAttribute("errorMessage", "배당금이 거부되었습니다.");
-        return "redirect:/dividend";
-    }
 }

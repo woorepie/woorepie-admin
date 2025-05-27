@@ -29,12 +29,6 @@
                     대행사 정보
                 </th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    매물 가격
-                </th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    토큰 가격
-                </th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     토큰 수
                 </th>
                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
@@ -57,12 +51,9 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500" th:text="${estate.agent != null ? estate.agent.agentName : '정보 없음'}">대행사명</div>
+                    <div class="text-sm text-gray-500" th:text="${estate.agent != null ? estate.agent.businessName : '정보 없음'}">대행사명</div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500" th:text="${#numbers.formatInteger(estate.totalEstateArea, 0, 'COMMA')} + ' 만원'">300,000,000</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500"
-                    th:text="${estate.tokenAmount > 0 ? #numbers.formatDecimal((estate.totalEstateArea.doubleValue() / estate.tokenAmount), 0, 'COMMA', 0, 'POINT') + ' 원' : 'N/A'}">
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500" th:text="${estate.tokenAmount}">20,000</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500" th:text="${estate.tokenAmount}"></td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                     <div class="flex justify-end space-x-2">
                         <!-- 승인 버튼 -->

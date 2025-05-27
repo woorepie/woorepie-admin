@@ -20,6 +20,7 @@ public class EstateServiceImpl implements EstateService {
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getAllEstate() {
+
         List<Estate> estateList =  estateRepository.findWithAgentById(SubState.READY);
 
         return estateList;

@@ -7,8 +7,7 @@ import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.global.kafka.util.KafkaRetryUtil;
 import com.piehouse.wooreadmin.subscription.entity.Subscription;
 import com.piehouse.wooreadmin.subscription.repository.SubscriptionRepository;
-import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -17,16 +16,14 @@ import java.util.List;
 
 @Service
 @Slf4j
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class KafkaProducerServiceImpl implements KafkaProducerService {
 
-    private SubscriptionRepository subscriptionRepository;
-    private KafkaTemplate<String, Object> kafkaTemplate;
-    private KafkaRetryUtil kafkaRetryUtil;
+    private final SubscriptionRepository subscriptionRepository;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaRetryUtil kafkaRetryUtil;
     private static final String DIVIDEND_RESPONSE_TOPIC = "dividend.accept";
     private static final String SALE_RESPONSE_TOPIC = "sale.accept";
-
-
 
     @Override
     public void sendSaleCompleteEvent(SaleCompleteEvent event) {
@@ -35,13 +32,12 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
     @Override
     public void sendDividendCompleteEvent(DividendCompleteMessage event) {
-
+        send(DIVIDEND_RESPONSE_TOPIC, event);
     }
 
     @Override
     public void sendSubscriptionCompleteEvent(Long estateId) {
         List<Subscription> subscriptions = subscriptionRepository.findByEstate_EstateId(estateId);
-
 
         List<SubscriptionCompleteMessage.CustomerSubscription> customerList = subscriptions.stream()
                 .map(s -> SubscriptionCompleteMessage.CustomerSubscription.builder()
