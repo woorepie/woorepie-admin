@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface DashboardRepository extends JpaRepository<Estate, Long> {
+public interface EstateRepository extends JpaRepository<Estate, Long> {
 
     @Query("SELECT e FROM Estate e JOIN FETCH e.agent WHERE e.subState = :state")
     List<Estate> findWithAgentById(@Param("state")SubState state);

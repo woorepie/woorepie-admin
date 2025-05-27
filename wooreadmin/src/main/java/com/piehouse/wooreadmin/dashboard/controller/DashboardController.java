@@ -28,6 +28,7 @@ public class DashboardController {
         return "dashboard";
     }
 
+    // 매물 승인
     @PostMapping("/estate/approve")
     public String approve(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
         Boolean result = dashboardService.approveEstate(dto);
@@ -41,7 +42,7 @@ public class DashboardController {
         return "redirect:/";
     }
 
-    @PostMapping("/reject/{estateId}")
+    @PostMapping("/reject")
     public String reject(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
         Boolean result = dashboardService.rejectEstate(dto);
 

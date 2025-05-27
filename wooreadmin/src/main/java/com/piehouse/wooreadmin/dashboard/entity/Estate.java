@@ -2,7 +2,6 @@ package com.piehouse.wooreadmin.dashboard.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,8 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "estate")
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(toBuilder = true)
 @ToString(exclude = "agent")
@@ -95,6 +93,20 @@ public class Estate {
     // 매물 정보 수정
     public Estate updateDescription(String newDescription) {
         this.estateDescription = newDescription;
+        return this;
+    }
+
+
+    // 매물 상태 수정
+    public Estate updateSubState(SubState newSubState) {
+        this.subState = newSubState;
+        return this;
+    }
+
+    // 청약 기간 설정
+    public Estate updateSubDate() {
+        this.subStartDate = LocalDateTime.now();
+        this.subEndDate = this.subStartDate.plusWeeks(2);
         return this;
     }
 

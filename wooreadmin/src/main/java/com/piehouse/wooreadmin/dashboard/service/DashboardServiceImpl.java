@@ -3,7 +3,7 @@ package com.piehouse.wooreadmin.dashboard.service;
 import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
 import com.piehouse.wooreadmin.dashboard.entity.SubState;
-import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
+import com.piehouse.wooreadmin.dashboard.repository.EstateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DashboardServiceImpl implements DashboardService {
 
-    private final DashboardRepository dashboardRepository;
+    private final EstateRepository estateRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getAllEstate() {
-        List<Estate> estateList =  dashboardRepository.findWithAgentById(SubState.READY);
+        List<Estate> estateList =  estateRepository.findWithAgentById(SubState.READY);
 
         return estateList;
     }
@@ -30,10 +30,14 @@ public class DashboardServiceImpl implements DashboardService {
     @Transactional
     public Boolean approveEstate(EstateApproveRequest dto) {
         try{
-            Estate estate = new Estate();
-            estate.setEstateId(dto.getEstateId());
-            estate.setSubState(SubState.RUNNING);
-            dashboardRepository.save(estate);
+            Estate estate = estateRepository.findById(dto.getEstateId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+
+            estate.updateSubState(SubState.RUNNING);
+            estate.updateSubDate();
+
+            estateRepository.save(estate);
+
             return true;
         }catch (Exception e){
             log.error("매물 승인 중 오류 발생: ", e);
@@ -45,14 +49,18 @@ public class DashboardServiceImpl implements DashboardService {
     @Transactional
     public Boolean rejectEstate(EstateApproveRequest dto) {
         try{
-            Estate estate = new Estate();
-            estate.setEstateId(dto.getEstateId());
-            estate.setSubState(SubState.FAILURE);
-            dashboardRepository.save(estate);
+            Estate estate = estateRepository.findById(dto.getEstateId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+
+            estate.updateSubState(SubState.FAILURE);
+
+            estateRepository.save(estate);
+
             return true;
         }catch (Exception e){
             log.error("매물 거절 중 오류 발생: ", e);
             return false;
         }
     }
+
 }

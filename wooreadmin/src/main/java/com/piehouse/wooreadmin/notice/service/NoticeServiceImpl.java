@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.notice.service;
 
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
+import com.piehouse.wooreadmin.dashboard.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.aws.S3Service;
 import com.piehouse.wooreadmin.notice.entity.Notice;
 import com.piehouse.wooreadmin.notice.repository.NoticeRepository;
@@ -20,14 +20,14 @@ import java.util.List;
 public class NoticeServiceImpl implements NoticeService {
 
     private final S3Service s3Service;
-    private final DashboardRepository dashboardRepository;
+    private final EstateRepository estateRepository;
     private final NoticeRepository noticeRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getAllEstates() {
 
-        List<Estate> estates = dashboardRepository.findAll();
+        List<Estate> estates = estateRepository.findAll();
 
         return estates;
     }

@@ -1,15 +1,13 @@
 package com.piehouse.wooreadmin.subscription.controller;
 
+import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -30,9 +28,9 @@ public class SubscriptionController {
         return "subscription";
     }
 
-    @PostMapping("/approve/{estateId}")
-    public String approve(@PathVariable Long estateId, RedirectAttributes redirectAttributes) {
-        Boolean result = subscriptionService.approveSubscription(estateId);
+    @PostMapping("/approve")
+    public String approve(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
+        Boolean result = subscriptionService.approveSubscription(dto);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 승인되었습니다.");
@@ -43,9 +41,9 @@ public class SubscriptionController {
         return "redirect:/subscription";
     }
 
-    @PostMapping("/reject/{estateId}")
-    public String reject(@PathVariable Long estateId, RedirectAttributes redirectAttributes) {
-        Boolean result = subscriptionService.rejectSubscription(estateId);
+    @PostMapping("/reject")
+    public String reject(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
+        Boolean result = subscriptionService.rejectSubscription(dto);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 거부되었습니다.");

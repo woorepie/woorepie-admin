@@ -1,8 +1,9 @@
 package com.piehouse.wooreadmin.subscription.service;
 
+import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
 import com.piehouse.wooreadmin.dashboard.entity.SubState;
-import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
+import com.piehouse.wooreadmin.dashboard.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
-    private final DashboardRepository dashboardRepository;
+    private final EstateRepository estateRepository;
     private final KafkaProducerService kafkaProducerService;
 
 //    @Override
@@ -29,20 +30,22 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<Estate> getEstateList() {
-        return dashboardRepository.findEstateBySubState(SubState.READY);
+        return estateRepository.findEstateBySubState(SubState.READY);
     }
 
 
     @Override
     @Transactional
-    public Boolean approveSubscription(Long id) {
+    public Boolean approveSubscription(EstateApproveRequest dto) {
         try{
-            Estate estate = dashboardRepository.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + id));
-            estate.setSubState(SubState.SUCCESS);
-            dashboardRepository.save(estate);
+            Estate estate = estateRepository.findById(dto.getEstateId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
 
-            kafkaProducerService.sendSubscriptionCompleteEvent(id);
+            estate.updateSubState(SubState.SUCCESS);
+            estateRepository.save(estate);
+
+            kafkaProducerService.sendSubscriptionCompleteEvent(dto.getEstateId());
+
             return true;
         }catch (Exception e){
             log.error("매물 승인 중 오류 발생: ", e);
@@ -52,18 +55,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional
-    public Boolean rejectSubscription(Long id) {
+    public Boolean rejectSubscription(EstateApproveRequest dto) {
         try{
-            Estate estate = new Estate();
-            estate.setEstateId(id);
-            estate.setSubState(SubState.FAILURE);
-            dashboardRepository.save(estate);
+            Estate estate = estateRepository.findById(dto.getEstateId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+
+            estate.updateSubState(SubState.SUCCESS);
+            estateRepository.save(estate);
+
             return true;
         }catch (Exception e){
             log.error("매물 거절 중 오류 발생: ", e);
             return false;
         }
     }
-
 
 }
