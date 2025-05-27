@@ -1,6 +1,5 @@
 package com.piehouse.wooreadmin.estate.service;
 
-import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.estate.entity.SubState;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
@@ -28,10 +27,10 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     @Transactional
-    public Boolean approveEstate(EstateApproveRequest dto) {
+    public Boolean approveEstate(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(dto.getEstateId())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+            Estate estate = estateRepository.findById(estateId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
             estate.updateSubState(SubState.RUNNING);
             estate.updateSubDate();
@@ -47,10 +46,10 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     @Transactional
-    public Boolean rejectEstate(EstateApproveRequest dto) {
+    public Boolean rejectEstate(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(dto.getEstateId())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+            Estate estate = estateRepository.findById(estateId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
             estate.updateSubState(SubState.FAILURE);
 

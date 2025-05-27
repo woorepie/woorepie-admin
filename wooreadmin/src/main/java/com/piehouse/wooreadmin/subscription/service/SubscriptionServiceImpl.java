@@ -1,6 +1,5 @@
 package com.piehouse.wooreadmin.subscription.service;
 
-import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.estate.entity.SubState;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
@@ -36,15 +35,15 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional
-    public Boolean approveSubscription(EstateApproveRequest dto) {
+    public Boolean approveSubscription(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(dto.getEstateId())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+            Estate estate = estateRepository.findById(estateId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
             estate.updateSubState(SubState.SUCCESS);
             estateRepository.save(estate);
 
-            kafkaProducerService.sendSubscriptionCompleteEvent(dto.getEstateId());
+            kafkaProducerService.sendSubscriptionCompleteEvent(estateId);
 
             return true;
         }catch (Exception e){
@@ -55,10 +54,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional
-    public Boolean rejectSubscription(EstateApproveRequest dto) {
+    public Boolean rejectSubscription(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(dto.getEstateId())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + dto.getEstateId()));
+            Estate estate = estateRepository.findById(estateId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
             estate.updateSubState(SubState.SUCCESS);
             estateRepository.save(estate);

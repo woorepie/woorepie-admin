@@ -10,4 +10,5 @@ public interface DividendRepository extends JpaRepository<Dividend, Long> {
 
     @Query("SELECT d FROM Dividend d JOIN FETCH d.estate e")
     List<Dividend> findALlDividends();
+
 }

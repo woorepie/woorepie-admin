@@ -1,6 +1,5 @@
 package com.piehouse.wooreadmin.subscription.controller;
 
-import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
@@ -29,8 +28,8 @@ public class SubscriptionController {
     }
 
     @PostMapping("/approve")
-    public String approve(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
-        Boolean result = subscriptionService.approveSubscription(dto);
+    public String approve(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
+        Boolean result = subscriptionService.approveSubscription(estateId);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 승인되었습니다.");
@@ -42,8 +41,8 @@ public class SubscriptionController {
     }
 
     @PostMapping("/reject")
-    public String reject(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
-        Boolean result = subscriptionService.rejectSubscription(dto);
+    public String reject(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
+        Boolean result = subscriptionService.rejectSubscription(estateId);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 거부되었습니다.");

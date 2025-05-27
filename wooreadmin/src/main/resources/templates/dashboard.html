@@ -66,13 +66,15 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                     <div class="flex justify-end space-x-2">
                         <!-- 승인 버튼 -->
-                        <form th:action="@{/approve/{id}(id=${estate.estateId})}" method="post">
+                        <form th:action="@{estate/approve}" method="post">
+                            <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-blue-600 text-white rounded text-sm">
                                 승인
                             </button>
                         </form>
                         <!-- 거부 버튼 -->
-                        <form th:action="@{/reject/{id}(id=${estate.estateId})}" method="post">
+                        <form th:action="@{estate/reject}" method="post">
+                            <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-gray-200 text-gray-700 rounded text-sm">
                                 거부
                             </button>
