@@ -1,4 +1,4 @@
-package com.piehouse.wooreadmin.dashboard.dto;
+package com.piehouse.wooreadmin.estate.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

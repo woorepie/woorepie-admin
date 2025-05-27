@@ -1,4 +1,4 @@
-package com.piehouse.wooreadmin.dashboard.entity;
+package com.piehouse.wooreadmin.estate.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

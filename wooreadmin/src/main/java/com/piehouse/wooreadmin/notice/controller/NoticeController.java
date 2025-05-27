@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.notice.controller;
 
 
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.notice.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

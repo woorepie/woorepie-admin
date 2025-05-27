@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.subscription.service;
 
-import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 
 import java.util.List;
 

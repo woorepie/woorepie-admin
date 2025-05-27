@@ -1,6 +1,6 @@
 package com.piehouse.wooreadmin.dividend.controller;
 
-import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
+import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.dividend.entity.Dividend;
 import com.piehouse.wooreadmin.dividend.repository.DividendRepository;
 import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;

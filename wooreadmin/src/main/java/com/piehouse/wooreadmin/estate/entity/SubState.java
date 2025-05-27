@@ -1,4 +1,4 @@
-package com.piehouse.wooreadmin.dashboard.entity;
+package com.piehouse.wooreadmin.estate.entity;
 
 public enum SubState {
     READY, // 청약 등록 대기

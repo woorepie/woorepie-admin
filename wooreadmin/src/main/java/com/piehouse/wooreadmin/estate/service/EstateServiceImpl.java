@@ -1,9 +1,9 @@
-package com.piehouse.wooreadmin.dashboard.service;
+package com.piehouse.wooreadmin.estate.service;
 
-import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.entity.SubState;
-import com.piehouse.wooreadmin.dashboard.repository.EstateRepository;
+import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
+import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class DashboardServiceImpl implements DashboardService {
+public class EstateServiceImpl implements EstateService {
 
     private final EstateRepository estateRepository;
 

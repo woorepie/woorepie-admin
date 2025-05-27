@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.subscription.controller;
 
-import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.piehouse.wooreadmin.notice.service;
 
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

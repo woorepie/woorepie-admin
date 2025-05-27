@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.notice.service;
 
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.repository.EstateRepository;
+import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.aws.S3Service;
 import com.piehouse.wooreadmin.notice.entity.Notice;
 import com.piehouse.wooreadmin.notice.repository.NoticeRepository;

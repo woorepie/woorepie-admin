@@ -1,4 +1,4 @@
-package com.piehouse.wooreadmin.dashboard.entity;
+package com.piehouse.wooreadmin.estate.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

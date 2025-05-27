@@ -1,9 +1,9 @@
-package com.piehouse.wooreadmin.dashboard.controller;
+package com.piehouse.wooreadmin.estate.controller;
 
 
-import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.service.DashboardService;
+import com.piehouse.wooreadmin.estate.dto.EstateApproveRequest;
+import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.service.EstateService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +15,14 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/")
-public class DashboardController {
+public class EstateController {
 
-    private final DashboardService dashboardService;
+    private final EstateService estateService;
 
     @GetMapping
     public String DashboardView(Model model) {
         model.addAttribute("currentpage", "dashboard");
-        List<Estate> estateList = dashboardService.getAllEstate();
+        List<Estate> estateList = estateService.getAllEstate();
         model.addAttribute("estates", estateList);
 
         return "dashboard";
@@ -31,7 +31,7 @@ public class DashboardController {
     // 매물 승인
     @PostMapping("/estate/approve")
     public String approve(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
-        Boolean result = dashboardService.approveEstate(dto);
+        Boolean result = estateService.approveEstate(dto);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 승인되었습니다.");
@@ -44,7 +44,7 @@ public class DashboardController {
 
     @PostMapping("/reject")
     public String reject(@RequestBody EstateApproveRequest dto, RedirectAttributes redirectAttributes) {
-        Boolean result = dashboardService.rejectEstate(dto);
+        Boolean result = estateService.rejectEstate(dto);
 
         if (result) {
             redirectAttributes.addFlashAttribute("successMessage", "매물이 성공적으로 거부되었습니다.");
