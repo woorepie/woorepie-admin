@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,8 @@ public class DashboardController {
     public String DashboardView(Model model) {
         model.addAttribute("currentpage", "dashboard");
         Optional<List<Estate>> estateList = dashboardService.getAllEstate();
-        estateList.ifPresent(estate -> model.addAttribute("estate", estate));
+        estateList.ifPresent(estate -> model.addAttribute("estates", estate));
+
         return "dashboard";
     }
 

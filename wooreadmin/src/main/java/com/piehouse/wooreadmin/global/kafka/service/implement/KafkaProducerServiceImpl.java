@@ -23,16 +23,19 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     private SubscriptionRepository subscriptionRepository;
     private KafkaTemplate<String, Object> kafkaTemplate;
     private KafkaRetryUtil kafkaRetryUtil;
-    private SubscriptionCompleteMessage subscriptionCompleteMessage;
+    private static final String DIVIDEND_RESPONSE_TOPIC = "dividend.accept";
+    private static final String SALE_RESPONSE_TOPIC = "sale.accept";
+
 
 
     @Override
     public void sendSaleCompleteEvent(SaleCompleteEvent event) {
-        
+        send(SALE_RESPONSE_TOPIC, event);
     }
 
     @Override
     public void sendDividendCompleteEvent(DividendCompleteMessage event) {
+
     }
 
     @Override
