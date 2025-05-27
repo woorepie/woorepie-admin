@@ -2,9 +2,7 @@ package com.piehouse.wooreadmin.notice.controller;
 
 
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.notice.repository.NoticeRepository;
 import com.piehouse.wooreadmin.notice.service.NoticeService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/disclosure")
@@ -28,8 +25,8 @@ public class NoticeController {
     @GetMapping("")
     public String DisclosureView(Model model){
         model.addAttribute("currentpage", "disclosure");
-        Optional<List<Estate>> estates = noticeService.getAllEstates();
-        estates.ifPresent(estateList -> model.addAttribute("estates", estateList));
+        List<Estate> estates = noticeService.getAllEstates();
+        model.addAttribute("estates", estates);
         return "disclosure-create";
     }
 

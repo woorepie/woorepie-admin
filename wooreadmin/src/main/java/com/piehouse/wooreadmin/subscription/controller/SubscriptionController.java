@@ -1,7 +1,6 @@
 package com.piehouse.wooreadmin.subscription.controller;
 
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.service.DashboardService;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/subscription")
@@ -24,11 +22,11 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final KafkaProducerService kafkaProducerService;
 
-    @GetMapping("")
+    @GetMapping
     public String SubscriptionView(Model model) {
         model.addAttribute("currentpage", "subscription");
-        Optional<List<Estate>> estateList = subscriptionService.getEstateList();
-        estateList.ifPresent(estates -> model.addAttribute("estates", estates));
+        List<Estate> estateList = subscriptionService.getEstateList();
+        model.addAttribute("estates", estateList);
         return "subscription";
     }
 
@@ -57,7 +55,5 @@ public class SubscriptionController {
 
         return "redirect:/subscription";
     }
-
-
 
 }

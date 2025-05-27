@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -27,8 +25,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Estate>> getAllEstates() {
-        Optional<List<Estate>> estates = Optional.of(dashboardRepository.findAll());
+    public List<Estate> getAllEstates() {
+
+        List<Estate> estates = dashboardRepository.findAll();
 
         return estates;
     }

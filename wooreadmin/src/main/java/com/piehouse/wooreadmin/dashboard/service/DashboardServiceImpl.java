@@ -1,5 +1,6 @@
 package com.piehouse.wooreadmin.dashboard.service;
 
+import com.piehouse.wooreadmin.dashboard.dto.EstateApproveRequest;
 import com.piehouse.wooreadmin.dashboard.entity.Estate;
 import com.piehouse.wooreadmin.dashboard.entity.SubState;
 import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,17 +20,18 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Estate>> getAllEstate() {
-        Optional<List<Estate>> estateList =  dashboardRepository.findWithAgentById(SubState.READY);
+    public List<Estate> getAllEstate() {
+        List<Estate> estateList =  dashboardRepository.findWithAgentById(SubState.READY);
+
         return estateList;
     }
 
     @Override
     @Transactional
-    public Boolean approveEstate(Long id) {
+    public Boolean approveEstate(EstateApproveRequest dto) {
         try{
             Estate estate = new Estate();
-            estate.setEstateId(id);
+            estate.setEstateId(dto.getEstateId());
             estate.setSubState(SubState.RUNNING);
             dashboardRepository.save(estate);
             return true;
@@ -42,10 +43,10 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     @Transactional
-    public Boolean rejectEstate(Long id) {
+    public Boolean rejectEstate(EstateApproveRequest dto) {
         try{
             Estate estate = new Estate();
-            estate.setEstateId(id);
+            estate.setEstateId(dto.getEstateId());
             estate.setSubState(SubState.FAILURE);
             dashboardRepository.save(estate);
             return true;

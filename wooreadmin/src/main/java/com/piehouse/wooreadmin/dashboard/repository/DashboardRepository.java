@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface DashboardRepository extends JpaRepository<Estate, Long> {
 
     @Query("SELECT e FROM Estate e JOIN FETCH e.agent WHERE e.subState = :state")
-    Optional<List<Estate>> findWithAgentById(@Param("state")SubState state);
+    List<Estate> findWithAgentById(@Param("state")SubState state);
 
-    Optional <List<Estate>> findEstateBySubState(SubState state);
+    List<Estate> findEstateBySubState(SubState state);
 }

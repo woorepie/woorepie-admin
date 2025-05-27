@@ -4,7 +4,6 @@ import com.piehouse.wooreadmin.dashboard.entity.Estate;
 import com.piehouse.wooreadmin.dashboard.entity.SubState;
 import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
-import com.piehouse.wooreadmin.subscription.entity.Subscription;
 import com.piehouse.wooreadmin.subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -30,8 +28,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 //    }
 
     @Override
-    public Optional<List<Estate>> getEstateList() {
-        return dashboardRepository.findEstateBySubState(SubState.PENDING);
+    public List<Estate> getEstateList() {
+        return dashboardRepository.findEstateBySubState(SubState.READY);
     }
 
 
