@@ -1,22 +1,28 @@
 package com.piehouse.wooreadmin.sale.controller;
 
-import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
+import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.sale.service.SaleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/sale")
 @Slf4j
 @AllArgsConstructor
 public class SaleController {
-    private final KafkaProducerService kafkaProducerService;
+
+    private final SaleService saleService;
 
     @GetMapping("")
     public String SaleView(Model model) {
         model.addAttribute("currentpage", "sale");
+        List<Estate> estates = saleService.getSuccessEstateList();
+        model.addAttribute("estates", estates);
         return "sale";
     }
 
