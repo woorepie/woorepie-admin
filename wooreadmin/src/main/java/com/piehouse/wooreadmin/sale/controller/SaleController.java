@@ -1,15 +1,11 @@
 package com.piehouse.wooreadmin.sale.controller;
 
-import com.piehouse.wooreadmin.global.kafka.dto.SaleCompleteEvent;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.List;
 
 @Controller
 @RequestMapping("/sale")

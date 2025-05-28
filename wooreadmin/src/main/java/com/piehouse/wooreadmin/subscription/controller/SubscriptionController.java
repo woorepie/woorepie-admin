@@ -2,6 +2,7 @@ package com.piehouse.wooreadmin.subscription.controller;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
+import com.piehouse.wooreadmin.subscription.dto.SubEstateRequest;
 import com.piehouse.wooreadmin.subscription.service.SubscriptionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,12 @@ import java.util.List;
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
-    private final KafkaProducerService kafkaProducerService;
 
     @GetMapping
     public String SubscriptionView(Model model) {
         model.addAttribute("currentpage", "subscription");
-        List<Estate> estateList = subscriptionService.getEstateList();
+        List<SubEstateRequest> estateList = subscriptionService.getEstateList();
+        System.out.println(estateList.size());
         model.addAttribute("estates", estateList);
         return "subscription";
     }

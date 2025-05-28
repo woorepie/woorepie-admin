@@ -4,6 +4,7 @@ import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.estate.entity.SubState;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
+import com.piehouse.wooreadmin.subscription.dto.SubEstateRequest;
 import com.piehouse.wooreadmin.subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,10 +31,37 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 //    }
 
     @Override
-    public List<Estate> getEstateList() {
-        return estateRepository.findEstateBySubState(SubState.READY);
-    }
+    public List<SubEstateRequest> getEstateList() {
 
+        List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.RUNNING);
+
+        // 상태가 READY인 매물에 대해서만 총합 조회
+        List<Object[]> tokenSums = subscriptionRepository.findTotalSubTokenAmountByEstate(SubState.RUNNING);
+
+        Map<Long, Integer> recruitTokenMap = tokenSums.stream()
+                .collect(Collectors.toMap(
+                        row -> (Long) row[0],
+                        row -> ((Long) row[1]).intValue()
+                ));
+
+        return estates.stream()
+                .map(estate -> SubEstateRequest.builder()
+                        .estateId(estate.getEstateId())
+                        .estateName(estate.getEstateName())
+                        .agent(estate.getAgent())
+                        .estateState(estate.getEstateState())
+                        .estateCity(estate.getEstateCity())
+                        .estateAddress(estate.getEstateAddress())
+                        .tokenAmount(estate.getTokenAmount())
+                        .recruitTokenAmount(recruitTokenMap.getOrDefault(estate.getEstateId(), 0))
+                        .subStartDate(estate.getSubStartDate())
+                        .subEndDate(estate.getSubEndDate())
+                        .estateRegistrationDate(estate.getEstateRegistrationDate())
+                        .subState(estate.getSubState())
+                        .build())
+                .collect(Collectors.toList());
+
+    }
 
     @Override
     @Transactional
@@ -59,8 +89,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.SUCCESS);
+            estate.updateSubState(SubState.FAILURE);
             estateRepository.save(estate);
+
+            kafkaProducerService.sendSubscriptionFailEvent(estateId);
 
             return true;
         }catch (Exception e){

@@ -1,12 +1,12 @@
 package com.piehouse.wooreadmin.subscription.service;
 
-import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.subscription.dto.SubEstateRequest;
 
 import java.util.List;
 
 public interface SubscriptionService {
 
-    List<Estate> getEstateList();
+    List<SubEstateRequest> getEstateList();
 
     Boolean approveSubscription(Long estateId);
 

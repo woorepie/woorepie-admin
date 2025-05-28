@@ -24,7 +24,7 @@ public class DividendServiceImpl implements DividendService {
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getSuccessEstateList() {
-        List<Estate> estates = estateRepository.findEstateBySubState(SubState.SUCCESS);
+        List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.SUCCESS);
         return estates;
     }
 
