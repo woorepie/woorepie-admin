@@ -39,10 +39,4 @@ public class SaleController {
          return "redirect:/sale";
      }
 
-    // @PostMapping("/reject/{saleId}")
-    // public String reject(@PathVariable Long saleId, RedirectAttributes redirectAttributes) {
-    //     // 실제 거부 처리 로직 필요 (예: 상태 변경)
-    //     redirectAttributes.addFlashAttribute("errorMessage", "매각이 거부되었습니다.");
-    //     return "redirect:/sale";
-    // }
 }

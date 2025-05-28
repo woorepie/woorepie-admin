@@ -10,6 +10,4 @@ public interface SaleService {
 
     boolean approveSaleEstate(Long estateId);
 
-    boolean rejectSaleEstate(Long estateId);
-
 }

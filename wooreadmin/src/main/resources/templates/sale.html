@@ -57,17 +57,10 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                     <div class="flex justify-end space-x-2">
                         <!-- 승인 버튼 -->
-                        <form th:action="@{sale/approve}" method="post">
+                        <form th:action="@{sale/approve}" method="post" onsubmit="return confirmSale(this);">
                             <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-blue-600 text-white rounded text-sm">
                                 승인
-                            </button>
-                        </form>
-                        <!-- 거부 버튼 -->
-                        <form th:action="@{sale/reject}" method="post">
-                            <input type="hidden" name="estateId" th:value="${estate.estateId}" />
-                            <button type="submit" class="px-4 py-1 bg-gray-200 text-gray-700 rounded text-sm">
-                                거부
                             </button>
                         </form>
                     </div>
@@ -82,6 +75,12 @@
             </tbody>
         </table>
     </div>
+    <script>
+        function confirmSale(form) {
+            const confirmed = confirm("정말 이 매물을 매각 승인하시겠습니까?");
+            return confirmed; // true면 제출됨, false면 취소됨
+        }
+    </script>
 </div>
 </body>
 </html>

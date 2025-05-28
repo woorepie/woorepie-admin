@@ -46,9 +46,4 @@ public class SaleServiceImpl implements SaleService {
         }
     }
 
-    @Override
-    public boolean rejectSaleEstate(Long estateId) {
-        return false;
-    }
-
 }
