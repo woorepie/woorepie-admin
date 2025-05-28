@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -26,16 +27,17 @@ public class SaleController {
         return "sale";
     }
 
-    // @PostMapping("/approve/{saleId}")
-    // public String approve(@PathVariable Long saleId, RedirectAttributes redirectAttributes) {
-    //     SaleItem sale = saleService.findById(saleId);
-    //     // 실제 승인 처리 로직 필요 (예: 상태 변경)
-    //     SaleCompleteEvent event = new SaleCompleteEvent();
-    //     event.setEstateId(sale.getEstateId());
-    //     kafkaProducerService.sendSaleCompleteEvent(event);
-    //     redirectAttributes.addFlashAttribute("successMessage", "매각이 승인되었습니다.");
-    //     return "redirect:/sale";
-    // }
+     @PostMapping("/approve")
+     public String approve(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
+
+        if(saleService.approveSaleEstate(estateId)) {
+            redirectAttributes.addFlashAttribute("successMessage", "매물 매각이 성공적으로 승인되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "매물 매각 중 오류가 발생했습니다.");
+        }
+
+         return "redirect:/sale";
+     }
 
     // @PostMapping("/reject/{saleId}")
     // public String reject(@PathVariable Long saleId, RedirectAttributes redirectAttributes) {

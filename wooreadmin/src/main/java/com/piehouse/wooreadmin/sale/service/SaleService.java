@@ -8,6 +8,8 @@ public interface SaleService {
 
     List<Estate> getSuccessEstateList();
 
-    boolean approveDividend(Long estateId, Integer dividend);
+    boolean approveSaleEstate(Long estateId);
+
+    boolean rejectSaleEstate(Long estateId);
 
 }

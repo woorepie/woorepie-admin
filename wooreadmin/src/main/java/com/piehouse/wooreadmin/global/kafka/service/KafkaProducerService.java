@@ -5,7 +5,7 @@ import com.piehouse.wooreadmin.global.kafka.dto.CompleteEvent;
 
 public interface KafkaProducerService {
 
-    void sendSaleCompleteEvent(CompleteEvent event);
+    void sendSaleCompleteEvent(Long estateId);
 
     void sendDividendCompleteEvent(DividendCompleteMessage event);
 

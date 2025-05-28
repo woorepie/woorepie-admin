@@ -19,11 +19,19 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final KafkaRetryUtil kafkaRetryUtil;
     private static final String DIVIDEND_RESPONSE_TOPIC = "dividend.accept";
-    private static final String SALE_RESPONSE_TOPIC = "sale.accept";
+    private static final String SALE_RESPONSE_TOPIC = "exit.accept";
+    private static final String SUBSCRIPTION_SUCCESS_TOPIC = "subscription.success";
+    private static final String SUBSCRIPTION_FAILURE_TOPIC = "subscription.failure";
 
     @Override
-    public void sendSaleCompleteEvent(CompleteEvent event) {
+    public void sendSaleCompleteEvent(Long estateId) {
+
+        CompleteEvent event = CompleteEvent.builder()
+                .estateId(estateId)
+                .build();
+
         send(SALE_RESPONSE_TOPIC, event);
+
     }
 
     @Override
@@ -38,7 +46,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
                 .estateId(estateId)
                 .build();
 
-        send("subscription.success", event);
+        send(SUBSCRIPTION_SUCCESS_TOPIC, event);
 
     }
 
@@ -49,7 +57,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
                 .estateId(estateId)
                 .build();
 
-        send("subscription.failure", event);
+        send(SUBSCRIPTION_FAILURE_TOPIC, event);
 
     }
 

@@ -31,6 +31,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 //    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<SubEstateRequest> getEstateList() {
 
         List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.RUNNING);
