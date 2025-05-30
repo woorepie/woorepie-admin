@@ -22,7 +22,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("")
+    @GetMapping
     public String DisclosureView(Model model){
         model.addAttribute("currentpage", "disclosure");
         List<Estate> estates = noticeService.getAllEstates();

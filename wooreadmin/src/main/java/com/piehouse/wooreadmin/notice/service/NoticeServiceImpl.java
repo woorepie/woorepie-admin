@@ -41,15 +41,17 @@ public class NoticeServiceImpl implements NoticeService {
             noticeFileUrl = s3Service.uploadEstateDisclosureFile(estateId, file);
         }
 
+        Estate estate = estateRepository.findById(estateId)
+                .orElseThrow(() -> new RuntimeException("Estate not found"));
+
         Notice notice = Notice.builder()
-                .estate(estateId)  // estate 필드명에 맞게 수정
+                .estate(estate)
                 .noticeTitle(noticeTitle)
                 .noticeContent(noticeContent)
                 .noticeFileUrl(noticeFileUrl)
                 .build();
 
         noticeRepository.save(notice);
-
 
         return true;
     }

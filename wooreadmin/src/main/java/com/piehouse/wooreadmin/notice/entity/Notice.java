@@ -1,5 +1,6 @@
 package com.piehouse.wooreadmin.notice.entity;
 
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,8 +22,10 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long noticeId;
 
-    @Column(nullable = false)
-    private Long estate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estate_id", nullable = false)
+    private Estate estate;
 
     @Column(nullable = false, length = 100)
     private String noticeTitle;
