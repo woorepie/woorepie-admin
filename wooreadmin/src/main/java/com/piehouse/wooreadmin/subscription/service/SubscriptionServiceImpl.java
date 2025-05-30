@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.subscription.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.subscription.dto.SubEstateRequest;
@@ -34,10 +34,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Transactional(readOnly = true)
     public List<SubEstateRequest> getEstateList() {
 
-        List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.RUNNING);
+        List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatus(EstateStatus.RUNNING);
 
         // 상태가 READY인 매물에 대해서만 총합 조회
-        List<Object[]> tokenSums = subscriptionRepository.findTotalSubTokenAmountByEstate(SubState.RUNNING);
+        List<Object[]> tokenSums = subscriptionRepository.findTotalSubTokenAmountByEstate(EstateStatus.RUNNING);
 
         Map<Long, Integer> recruitTokenMap = tokenSums.stream()
                 .collect(Collectors.toMap(
@@ -58,7 +58,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                         .subStartDate(estate.getSubStartDate())
                         .subEndDate(estate.getSubEndDate())
                         .estateRegistrationDate(estate.getEstateRegistrationDate())
-                        .subState(estate.getSubState())
+                        .estateStatus(estate.getEstateStatus())
                         .build())
                 .collect(Collectors.toList());
 
@@ -71,7 +71,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.SUCCESS);
+            estate.updateSubState(EstateStatus.SUCCESS);
             estateRepository.save(estate);
 
             kafkaProducerService.sendSubscriptionCompleteEvent(estateId);
@@ -90,7 +90,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.FAILURE);
+            estate.updateSubState(EstateStatus.FAILURE);
             estateRepository.save(estate);
 
             kafkaProducerService.sendSubscriptionFailEvent(estateId);

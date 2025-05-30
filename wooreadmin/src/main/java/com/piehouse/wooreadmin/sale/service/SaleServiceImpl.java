@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.sale.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class SaleServiceImpl implements SaleService {
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getSuccessEstateList() {
-        List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.SUCCESS);
+        List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatus(EstateStatus.SUCCESS);
         return estates;
     }
 
@@ -34,7 +34,7 @@ public class SaleServiceImpl implements SaleService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.EXIT);
+            estate.updateSubState(EstateStatus.EXIT);
             estateRepository.save(estate);
 
             kafkaProducerService.sendSaleCompleteEvent(estateId);

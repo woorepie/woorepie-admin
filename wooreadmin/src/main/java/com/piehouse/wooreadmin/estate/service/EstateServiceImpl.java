@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.estate.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class EstateServiceImpl implements EstateService {
     @Transactional(readOnly = true)
     public List<Estate> getAllEstate() {
 
-        List<Estate> estateList =  estateRepository.findEstateWithAgentBySubState(SubState.READY);
+        List<Estate> estateList =  estateRepository.findEstateWithAgentByEstateStatus(EstateStatus.READY);
 
         return estateList;
     }
@@ -33,7 +33,7 @@ public class EstateServiceImpl implements EstateService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.RUNNING);
+            estate.updateSubState(EstateStatus.RUNNING);
             estate.updateSubDate();
 
             estateRepository.save(estate);
@@ -52,7 +52,7 @@ public class EstateServiceImpl implements EstateService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(SubState.FAILURE);
+            estate.updateSubState(EstateStatus.FAILURE);
 
             estateRepository.save(estate);
 

@@ -1,12 +1,11 @@
 package com.piehouse.wooreadmin.subscription.dto;
 
 import com.piehouse.wooreadmin.estate.entity.Agent;
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -36,6 +35,6 @@ public class SubEstateRequest {
 
     private LocalDateTime estateRegistrationDate;
 
-    private SubState subState;
+    private EstateStatus estateStatus;
 
 }

@@ -88,7 +88,7 @@ public class Estate {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private SubState subState;
+    private EstateStatus estateStatus = EstateStatus.READY;
 
     // 매물 정보 수정
     public Estate updateDescription(String newDescription) {
@@ -98,8 +98,8 @@ public class Estate {
 
 
     // 매물 상태 수정
-    public Estate updateSubState(SubState newSubState) {
-        this.subState = newSubState;
+    public Estate updateSubState(EstateStatus newEstateStatus) {
+        this.estateStatus = newEstateStatus;
         return this;
     }
 

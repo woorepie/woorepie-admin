@@ -1,6 +1,6 @@
 package com.piehouse.wooreadmin.subscription.repository;
 
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.subscription.entity.Subscription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +14,8 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
     @Query("SELECT s.estate.estateId, SUM(s.subTokenAmount) " +
             "FROM Subscription s " +
-            "WHERE s.estate.subState = :state " +
+            "WHERE s.estate.estateStatus = :state " +
             "GROUP BY s.estate.estateId")
-    List<Object[]> findTotalSubTokenAmountByEstate(@Param("state") SubState state);
+    List<Object[]> findTotalSubTokenAmountByEstate(@Param("state") EstateStatus state);
 
 }

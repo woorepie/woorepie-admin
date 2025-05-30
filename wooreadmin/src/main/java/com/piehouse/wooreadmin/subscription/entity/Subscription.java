@@ -36,4 +36,8 @@ public class Subscription {
     @Column(updatable = false)
     private LocalDateTime subDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sub_status", nullable = false)
+    private SubStatus subStatus = SubStatus.PENDING;
+
 }

@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.dividend.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
-import com.piehouse.wooreadmin.estate.entity.SubState;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
@@ -24,7 +24,7 @@ public class DividendServiceImpl implements DividendService {
     @Override
     @Transactional(readOnly = true)
     public List<Estate> getSuccessEstateList() {
-        List<Estate> estates = estateRepository.findEstateWithAgentBySubState(SubState.SUCCESS);
+        List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatus(EstateStatus.SUCCESS);
         return estates;
     }
 
