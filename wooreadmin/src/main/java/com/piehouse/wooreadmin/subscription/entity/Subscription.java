@@ -1,6 +1,6 @@
 package com.piehouse.wooreadmin.subscription.entity;
 
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,5 +35,9 @@ public class Subscription {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime subDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sub_status", nullable = false)
+    private SubStatus subStatus = SubStatus.PENDING;
 
 }

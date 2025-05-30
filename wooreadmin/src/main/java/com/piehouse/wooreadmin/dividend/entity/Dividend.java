@@ -1,5 +1,5 @@
 package com.piehouse.wooreadmin.dividend.entity;
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.Estate;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

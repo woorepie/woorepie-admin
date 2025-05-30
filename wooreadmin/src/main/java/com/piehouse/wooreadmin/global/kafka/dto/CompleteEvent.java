@@ -8,10 +8,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class DividendCompleteMessage {
+public class CompleteEvent {
 
-    private Long estate_id;
-
-    private Integer dividend;
+    private Long estateId;
 
 }

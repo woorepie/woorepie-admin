@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.notice.service;
 
-import com.piehouse.wooreadmin.dashboard.entity.Estate;
-import com.piehouse.wooreadmin.dashboard.repository.DashboardRepository;
+import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.aws.S3Service;
 import com.piehouse.wooreadmin.notice.entity.Notice;
 import com.piehouse.wooreadmin.notice.repository.NoticeRepository;
@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -22,13 +20,14 @@ import java.util.UUID;
 public class NoticeServiceImpl implements NoticeService {
 
     private final S3Service s3Service;
-    private final DashboardRepository dashboardRepository;
+    private final EstateRepository estateRepository;
     private final NoticeRepository noticeRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<Estate>> getAllEstates() {
-        Optional<List<Estate>> estates = Optional.of(dashboardRepository.findAll());
+    public List<Estate> getAllEstates() {
+
+        List<Estate> estates = estateRepository.findAll();
 
         return estates;
     }
