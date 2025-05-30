@@ -13,4 +13,7 @@ public interface EstateRepository extends JpaRepository<Estate, Long> {
     @Query("SELECT e FROM Estate e JOIN FETCH e.agent WHERE e.estateStatus = :state")
     List<Estate> findEstateWithAgentByEstateStatus(@Param("state") EstateStatus state);
 
+    @Query("SELECT e FROM Estate e JOIN FETCH e.agent WHERE e.estateStatus IN :states")
+    List<Estate> findEstateWithAgentByEstateStatusIn(@Param("states") List<EstateStatus> states);
+
 }

@@ -82,6 +82,7 @@
 
     <div class="bg-white p-6 rounded-lg shadow-sm">
         <form th:action="@{/disclosure/create}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="estate_id" th:value="${estate}">
             <!-- 제목 입력 -->
             <div class="form-group">
                 <label for="notice_title" class="form-label">제목을 입력하세요.</label>
@@ -102,15 +103,6 @@
                     <button type="button" id="file-btn" class="btn-browse">파일찾기 선택</button>
                     <input type="file" id="file" name="file" style="display: none;" onchange="updateFileName(this)">
                 </div>
-            </div>
-
-            <!-- 매물 선택 -->
-            <div class="form-group">
-                <label for="estate_id" class="form-label">매물을 선택하세요.</label>
-                <select id="estate_id" name="estate_id" class="form-control" required>
-                    <option value="">매물을 선택해 주세요</option>
-                    <option th:each="estate : ${estates}" th:value="${estate.estateId}" th:text="${estate.estateName}">강남 오피스텔 A동</option>
-                </select>
             </div>
 
             <!-- 약관 동의 -->

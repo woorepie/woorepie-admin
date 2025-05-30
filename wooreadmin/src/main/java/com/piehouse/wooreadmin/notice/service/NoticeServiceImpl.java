@@ -1,6 +1,7 @@
 package com.piehouse.wooreadmin.notice.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.aws.S3Service;
 import com.piehouse.wooreadmin.notice.entity.Notice;
@@ -27,7 +28,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(readOnly = true)
     public List<Estate> getAllEstates() {
 
-        List<Estate> estates = estateRepository.findAll();
+        List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatusIn(
+                List.of(EstateStatus.SUCCESS, EstateStatus.READY)
+        );
 
         return estates;
     }

@@ -23,10 +23,17 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping
-    public String DisclosureView(Model model){
+    public String DisclosureListView(Model model){
         model.addAttribute("currentpage", "disclosure");
         List<Estate> estates = noticeService.getAllEstates();
         model.addAttribute("estates", estates);
+        return "disclosure";
+    }
+
+    @GetMapping("/estate")
+    public String DisclosureView(@RequestParam("estateId") Long estateId, Model model){
+        model.addAttribute("currentpage", "disclosure");
+        model.addAttribute("estate", estateId);
         return "disclosure-create";
     }
 
