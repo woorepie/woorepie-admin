@@ -6,22 +6,26 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">공시 등록</h1>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">공시 매물 선택</h1>
 
     <div class="bg-gray-50 rounded-md overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
             <tr class="bg-gray-50">
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">유형</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">작성자</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">게시일</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    매물 정보
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    대행사 정보
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    매물 상태
+                </th>
                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-            <tr th:each="item : ${disclosureItems}" th:class="${itemStat.odd} ? 'bg-gray-50' : 'bg-white'" class="hover:bg-gray-100">
+            <tr th:each="estate : ${estates}" class="hover:bg-gray-50">
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center">
@@ -30,45 +34,43 @@
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <div class="text-sm font-medium text-gray-900" th:text="${item.title}">2023년 1분기 실적 공시</div>
+                            <div class="text-sm font-medium text-gray-900" th:text="${estate.estateName}">매물명</div>
+                            <div class="text-xs text-gray-500" th:text="${estate.estateAddress}">매물 주소</div>
                         </div>
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500" th:text="${item.type}">재무 공시</div>
+                    <div class="text-sm text-gray-500" th:text="${estate.agent != null ? estate.agent.businessName : '정보 없음'}">대행사명</div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${item.author}">김재무</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${item.publishDate}">2023-04-15</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                            <span th:class="${'badge ' + (item.status == 'published' ? 'badge-success' : (item.status == 'archived' ? 'badge-default' : 'badge-warning'))}"
-                                  th:text="${item.status == 'published' ? '게시됨' : (item.status == 'archived' ? '보관됨' : '초안')}">
-                                게시됨
-                            </span>
-                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500"
+                    th:text="${estate.estateStatus}">0</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                     <div class="flex justify-end space-x-2">
-                        <button th:if="${item.status == 'draft'}"
-                                th:onclick="'approveItem(\'' + ${item.id} + '\', \'disclosure/publish\')'"
-                                class="px-4 py-1 bg-[#0F62FE] text-white rounded text-sm">
-                            게시
-                        </button>
-                        <button th:if="${item.status == 'published'}"
-                                th:onclick="'rejectItem(\'' + ${item.id} + '\', \'disclosure/archive\')'"
-                                class="px-4 py-1 bg-gray-200 text-gray-700 rounded text-sm">
-                            보관
+                        <button type="button"
+                                class="px-4 py-1 bg-blue-600 text-white rounded text-sm"
+                                th:attr="data-id=${estate.estateId}, data-name=${estate.estateName}"
+                                onclick="redirectToEstate(this)">
+                            입력
                         </button>
                     </div>
                 </td>
             </tr>
             <!-- 데이터가 없을 경우 표시 -->
-            <tr th:if="${#lists.isEmpty(disclosureItems)}">
-                <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+            <tr th:if="${#lists.isEmpty(estates)}">
+                <td colspan="4" class="px-6 py-4 text-center text-gray-500">
                     데이터가 없습니다.
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+    <script>
+        function redirectToEstate(button) {
+            const estateId = button.getAttribute('data-id');
+            const url = `/wooreadmin/disclosure/estate?estateId=${estateId}`;
+            window.location.href = url;
+        }
+    </script>
 </div>
 </body>
 </html>

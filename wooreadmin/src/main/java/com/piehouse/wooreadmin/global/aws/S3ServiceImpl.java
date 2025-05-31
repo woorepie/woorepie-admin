@@ -59,7 +59,7 @@ public class S3ServiceImpl implements S3Service {
                     .orElse("");
 
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-            String key = String.format("estate/%d/%s-%s%s", estateId, "disclosure", timestamp, extension);
+            String key = String.format("notice/estate-%d/%s-%s%s", estateId, "disclosure", timestamp, extension);
 
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)

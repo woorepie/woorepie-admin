@@ -1,6 +1,7 @@
 package com.piehouse.wooreadmin.notice.service;
 
 import com.piehouse.wooreadmin.estate.entity.Estate;
+import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
 import com.piehouse.wooreadmin.global.aws.S3Service;
 import com.piehouse.wooreadmin.notice.entity.Notice;
@@ -27,7 +28,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(readOnly = true)
     public List<Estate> getAllEstates() {
 
-        List<Estate> estates = estateRepository.findAll();
+        List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatusIn(
+                List.of(EstateStatus.SUCCESS, EstateStatus.READY)
+        );
 
         return estates;
     }
@@ -41,15 +44,17 @@ public class NoticeServiceImpl implements NoticeService {
             noticeFileUrl = s3Service.uploadEstateDisclosureFile(estateId, file);
         }
 
+        Estate estate = estateRepository.findById(estateId)
+                .orElseThrow(() -> new RuntimeException("Estate not found"));
+
         Notice notice = Notice.builder()
-                .estate(estateId)  // estate 필드명에 맞게 수정
+                .estate(estate)
                 .noticeTitle(noticeTitle)
                 .noticeContent(noticeContent)
                 .noticeFileUrl(noticeFileUrl)
                 .build();
 
         noticeRepository.save(notice);
-
 
         return true;
     }
