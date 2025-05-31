@@ -1,13 +1,12 @@
 package com.piehouse.wooreadmin.global.kafka.service;
 
-import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;
-import com.piehouse.wooreadmin.global.kafka.dto.CompleteEvent;
+import com.piehouse.woorepie.global.kafka.dto.DividendAcceptEvent;
 
 public interface KafkaProducerService {
 
     void sendSaleCompleteEvent(Long estateId);
 
-    void sendDividendCompleteEvent(DividendCompleteMessage event);
+    void sendDividendCompleteEvent(DividendAcceptEvent event);
 
     void sendSubscriptionCompleteEvent(Long estateId);
 
