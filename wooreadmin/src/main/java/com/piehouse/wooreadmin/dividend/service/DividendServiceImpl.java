@@ -3,7 +3,7 @@ package com.piehouse.wooreadmin.dividend.service;
 import com.piehouse.wooreadmin.estate.entity.Estate;
 import com.piehouse.wooreadmin.estate.entity.EstateStatus;
 import com.piehouse.wooreadmin.estate.repository.EstateRepository;
-import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;
+import com.piehouse.woorepie.global.kafka.dto.DividendAcceptEvent;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class DividendServiceImpl implements DividendService {
     @Override
     public boolean approveDividend(Long estateId, Integer dividend) {
         try{
-            DividendCompleteMessage message = DividendCompleteMessage.builder()
+            DividendAcceptEvent message = DividendAcceptEvent.builder()
                     .estate_id(estateId)
                     .dividend(dividend)
                     .build();

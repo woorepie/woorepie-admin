@@ -1,4 +1,4 @@
-package com.piehouse.wooreadmin.global.kafka.dto;
+package com.piehouse.woorepie.global.kafka.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class DividendCompleteMessage {
+public class DividendAcceptEvent {
 
     private Long estate_id;
 

@@ -1,7 +1,7 @@
 package com.piehouse.wooreadmin.global.kafka.service.implement;
 
-import com.piehouse.wooreadmin.global.kafka.dto.DividendCompleteMessage;
-import com.piehouse.wooreadmin.global.kafka.dto.CompleteEvent;
+import com.piehouse.woorepie.global.kafka.dto.DividendAcceptEvent;
+import com.piehouse.woorepie.global.kafka.dto.CompleteEvent;
 import com.piehouse.wooreadmin.global.kafka.service.KafkaProducerService;
 import com.piehouse.wooreadmin.global.kafka.util.KafkaRetryUtil;
 import com.piehouse.wooreadmin.subscription.repository.SubscriptionRepository;
@@ -35,7 +35,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     }
 
     @Override
-    public void sendDividendCompleteEvent(DividendCompleteMessage event) {
+    public void sendDividendCompleteEvent(DividendAcceptEvent event) {
         send(DIVIDEND_RESPONSE_TOPIC, event);
     }
 
