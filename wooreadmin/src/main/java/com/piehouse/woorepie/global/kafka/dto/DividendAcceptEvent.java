@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class DividendAcceptEvent {
 
-    private Long estate_id;
+    private Long estateId;
 
     private Integer dividend;
 
