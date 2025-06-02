@@ -32,7 +32,7 @@ public class DividendServiceImpl implements DividendService {
     public boolean approveDividend(Long estateId, Integer dividend) {
         try{
             DividendAcceptEvent message = DividendAcceptEvent.builder()
-                    .estate_id(estateId)
+                    .estateId(estateId)
                     .dividend(dividend)
                     .build();
             kafkaProducerService.sendDividendCompleteEvent(message);
