@@ -56,11 +56,11 @@
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500" th:text="${estate.tokenAmount}">0</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                     <div class="flex justify-end space-x-2">
-                        <!-- 승인 버튼 -->
+                        <!-- 매각 버튼 -->
                         <form th:action="@{sale/approve}" method="post" onsubmit="return confirmSale(this);">
                             <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-blue-600 text-white rounded text-sm">
-                                승인
+                                매각
                             </button>
                         </form>
                     </div>
@@ -77,8 +77,27 @@
     </div>
     <script>
         function confirmSale(form) {
-            const confirmed = confirm("정말 이 매물을 매각 승인하시겠습니까?");
-            return confirmed; // true면 제출됨, false면 취소됨
+            // 가격 입력 받기
+            const price = prompt("매각 가격을 입력해주세요 (숫자만 입력)", "");
+            if (price === null || price.trim() === "") {
+                alert("매각 승인이 취소되었습니다."); // 취소 처리
+                return false;
+            }
+
+            // 숫자인지 검증 (선택)
+            if (isNaN(price) || Number(price) <= 0) {
+                alert("유효한 가격을 입력해주세요.");
+                return false;
+            }
+
+            // 숨겨진 input으로 가격을 form에 추가
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "salePrice";
+            input.value = price;
+            form.appendChild(input);
+
+            return true; // form submit 진행
         }
     </script>
 </div>
