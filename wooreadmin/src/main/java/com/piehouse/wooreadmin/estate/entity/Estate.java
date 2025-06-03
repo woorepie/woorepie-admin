@@ -86,16 +86,15 @@ public class Estate {
     @Column(nullable = false)
     private BigDecimal tradedEstateArea;
 
+    @Column
+    private Integer estateSalePrice;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstateStatus estateStatus = EstateStatus.READY;
 
-    // 매물 정보 수정
-    public Estate updateDescription(String newDescription) {
-        this.estateDescription = newDescription;
-        return this;
-    }
-
+    @Column
+    private Boolean estateWoori = false;
 
     // 매물 상태 수정
     public Estate updateSubState(EstateStatus newEstateStatus) {
@@ -107,6 +106,11 @@ public class Estate {
     public Estate updateSubDate() {
         this.subStartDate = LocalDateTime.now();
         this.subEndDate = this.subStartDate.plusWeeks(2);
+        return this;
+    }
+
+    public Estate updateEstateSalePrice(Integer newEstateSalePrice) {
+        this.estateSalePrice = newEstateSalePrice;
         return this;
     }
 

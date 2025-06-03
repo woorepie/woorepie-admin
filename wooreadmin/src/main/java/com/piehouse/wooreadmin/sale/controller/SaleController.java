@@ -28,9 +28,11 @@ public class SaleController {
     }
 
      @PostMapping("/approve")
-     public String approve(@RequestParam("estateId") Long estateId, RedirectAttributes redirectAttributes) {
+     public String approve(@RequestParam("estateId") Long estateId,
+                           @RequestParam("salePrice") Integer salePrice,
+                           RedirectAttributes redirectAttributes) {
 
-        if(saleService.approveSaleEstate(estateId)) {
+        if(saleService.approveSaleEstate(estateId, salePrice)) {
             redirectAttributes.addFlashAttribute("successMessage", "매물 매각이 성공적으로 승인되었습니다.");
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "매물 매각 중 오류가 발생했습니다.");
