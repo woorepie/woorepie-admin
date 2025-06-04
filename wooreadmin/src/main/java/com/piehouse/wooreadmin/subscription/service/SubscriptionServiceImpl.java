@@ -68,11 +68,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Transactional
     public Boolean approveSubscription(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(estateId)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
-
-            estate.updateSubState(EstateStatus.SUCCESS);
-            estateRepository.save(estate);
 
             kafkaProducerService.sendSubscriptionCompleteEvent(estateId);
 
@@ -87,11 +82,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Transactional
     public Boolean rejectSubscription(Long estateId) {
         try{
-            Estate estate = estateRepository.findById(estateId)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
-
-            estate.updateSubState(EstateStatus.FAILURE);
-            estateRepository.save(estate);
 
             kafkaProducerService.sendSubscriptionFailEvent(estateId);
 

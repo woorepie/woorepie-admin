@@ -33,7 +33,7 @@ public class EstateServiceImpl implements EstateService {
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
-            estate.updateSubState(EstateStatus.RUNNING);
+            estate.updateSubState(EstateStatus.PENDING);
             estate.updateSubDate();
 
             estateRepository.save(estate);
