@@ -28,19 +28,28 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     대행사 정보
                 </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    등록 날짜
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    매물 가격
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    토큰 가격
                 </th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     토큰 수
                 </th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    등록 날짜
+                </th>
+                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <!-- 승인/거부 -->
+                </th>
             </tr>
             </thead>
             <!-- 테이블 본문 -->
             <tbody class="bg-white divide-y divide-gray-200">
             <tr th:each="estate : ${estates}" class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-nowrap">
+                <!-- 매물 정보 -->
+                <td class="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-700">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -53,24 +62,39 @@
                         </div>
                     </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500" th:text="${estate.agent != null ? estate.agent.businessName : '정보 없음'}">대행사명</div>
+                <!-- 대행사 정보 -->
+                <td class="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-700"
+                    th:text="${estate.agent != null ? estate.agent.businessName : '정보 없음'}">대행사명
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500" th:text="${estate.estateRegistrationDate}">등록날짜</div>
+                <!-- 매물 가격 -->
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500"
+                    th:text="${estate.estateSalePrice}">가격
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500" th:text="${estate.tokenAmount}"></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                    <div class="flex justify-end space-x-2">
+                <!-- 토큰 가격 (소수점 버림) -->
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500"
+                    th:text="${(T(java.lang.Math).floor(estate.estateSalePrice / estate.tokenAmount)).intValue()}">
+                    토큰 가격
+                </td>
+                <!-- 토큰 수 -->
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500"
+                    th:text="${estate.tokenAmount}">토큰 수
+                </td>
+                <!-- 등록 날짜 -->
+                <td class="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500"
+                    th:text="${estate.estateRegistrationDate}">등록 날짜
+                </td>
+                <!-- 승인/거부 버튼 -->
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                    <div class="flex justify-center space-x-2">
                         <!-- 승인 버튼 -->
-                        <form th:action="@{estate/approve}" method="post">
+                        <form th:action="@{/estate/approve}" method="post">
                             <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-blue-600 text-white rounded text-sm">
                                 승인
                             </button>
                         </form>
                         <!-- 거부 버튼 -->
-                        <form th:action="@{estate/reject}" method="post">
+                        <form th:action="@{/estate/reject}" method="post">
                             <input type="hidden" name="estateId" th:value="${estate.estateId}" />
                             <button type="submit" class="px-4 py-1 bg-gray-200 text-gray-700 rounded text-sm">
                                 거부
@@ -81,7 +105,7 @@
             </tr>
             <!-- 데이터가 없을 경우 표시 -->
             <tr th:if="${estates == null || estates.isEmpty()}">
-                <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
                     데이터가 없습니다.
                 </td>
             </tr>
