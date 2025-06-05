@@ -29,7 +29,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     @Transactional
-    public boolean approveSaleEstate(Long estateId, Integer salePrice) {
+    public boolean approveSaleEstate(Long estateId, Long salePrice) {
         try{
             Estate estate = estateRepository.findById(estateId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));

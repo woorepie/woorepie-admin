@@ -86,14 +86,16 @@ public class Estate {
     @Column(nullable = false)
     private BigDecimal tradedEstateArea;
 
-    @Column
-    private Integer estateSalePrice;
+    @Column(nullable = false)
+    @Builder.Default
+    private Long estateSalePrice = 0L;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstateStatus estateStatus = EstateStatus.READY;
 
     @Column
+    @Builder.Default
     private Boolean estateWoori = false;
 
     // 매물 상태 수정
@@ -114,7 +116,7 @@ public class Estate {
         return this;
     }
 
-    public Estate updateEstateSalePrice(Integer newEstateSalePrice) {
+    public Estate updateEstateSalePrice(Long newEstateSalePrice) {
         this.estateSalePrice = newEstateSalePrice;
         return this;
     }

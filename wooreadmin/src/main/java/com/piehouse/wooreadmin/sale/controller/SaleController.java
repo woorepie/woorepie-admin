@@ -29,7 +29,7 @@ public class SaleController {
 
      @PostMapping("/approve")
      public String approve(@RequestParam("estateId") Long estateId,
-                           @RequestParam("salePrice") Integer salePrice,
+                           @RequestParam("salePrice") Long salePrice,
                            RedirectAttributes redirectAttributes) {
 
         if(saleService.approveSaleEstate(estateId, salePrice)) {
