@@ -35,7 +35,6 @@ public class SaleServiceImpl implements SaleService {
                     .orElseThrow(() -> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id=" + estateId));
 
             estate.updateEstateSalePrice(salePrice);
-            estate.updateSubState(EstateStatus.EXIT);
             estateRepository.save(estate);
 
             kafkaProducerService.sendSaleCompleteEvent(estateId);

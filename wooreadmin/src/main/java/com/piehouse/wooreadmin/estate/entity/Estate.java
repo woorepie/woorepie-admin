@@ -104,7 +104,12 @@ public class Estate {
 
     // 청약 기간 설정
     public Estate updateSubDate() {
-        this.subStartDate = LocalDateTime.now();
+        this.subStartDate = LocalDateTime.now()
+                .plusWeeks(2) // 2주 뒤
+                .withHour(10) // 10시
+                .withMinute(0) // 0분
+                .withSecond(0) // 0초
+                .withNano(0);
         this.subEndDate = this.subStartDate.plusWeeks(2);
         return this;
     }
