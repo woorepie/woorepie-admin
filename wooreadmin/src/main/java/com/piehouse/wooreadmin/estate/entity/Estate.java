@@ -44,7 +44,7 @@ public class Estate {
     private String estateLongitude;
 
     @Column(nullable = false)
-    private Integer tokenAmount;
+    private Long tokenAmount;
 
     @Column(columnDefinition = "TEXT")
     private String estateDescription;

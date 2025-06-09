@@ -25,9 +25,11 @@ public class SubEstateRequest {
 
     private String estateAddress;
 
-    private Integer tokenAmount;
+    private Long tokenAmount;
 
-    private Integer recruitTokenAmount;
+    private Long recruitTokenAmount;
+
+    private Long estateSalePrice;
 
     private LocalDateTime subStartDate;
 

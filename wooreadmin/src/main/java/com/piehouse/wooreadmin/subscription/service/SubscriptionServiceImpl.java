@@ -39,10 +39,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         // 상태가 READY인 매물에 대해서만 총합 조회
         List<Object[]> tokenSums = subscriptionRepository.findTotalSubTokenAmountByEstate(EstateStatus.RUNNING);
 
-        Map<Long, Integer> recruitTokenMap = tokenSums.stream()
+        Map<Long, Long> recruitTokenMap = tokenSums.stream()
                 .collect(Collectors.toMap(
-                        row -> (Long) row[0],
-                        row -> ((Long) row[1]).intValue()
+                        row -> ((Number) row[0]).longValue(),
+                        row -> ((Number) row[1]).longValue()
                 ));
 
         return estates.stream()
@@ -54,7 +54,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                         .estateCity(estate.getEstateCity())
                         .estateAddress(estate.getEstateAddress())
                         .tokenAmount(estate.getTokenAmount())
-                        .recruitTokenAmount(recruitTokenMap.getOrDefault(estate.getEstateId(), 0))
+                        .recruitTokenAmount(recruitTokenMap.getOrDefault(estate.getEstateId(), 0L))
+                        .estateSalePrice(estate.getEstateSalePrice())
                         .subStartDate(estate.getSubStartDate())
                         .subEndDate(estate.getSubEndDate())
                         .estateRegistrationDate(estate.getEstateRegistrationDate())
