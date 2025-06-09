@@ -30,7 +30,7 @@ public class Subscription {
     private Long customer;
 
     @Column(nullable = false)
-    private Integer subTokenAmount;
+    private Long subTokenAmount;
 
     @CreationTimestamp
     @Column(updatable = false)

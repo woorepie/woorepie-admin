@@ -29,7 +29,7 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Estate> getAllEstates() {
 
         List<Estate> estates = estateRepository.findEstateWithAgentByEstateStatusIn(
-                List.of(EstateStatus.SUCCESS, EstateStatus.READY)
+                List.of(EstateStatus.SUCCESS, EstateStatus.READY,EstateStatus.SUCCESS, EstateStatus.RUNNING)
         );
 
         return estates;
